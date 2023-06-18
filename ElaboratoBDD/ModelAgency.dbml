@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MODEL_AGENCY" Class="ModelAgencyDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\MODEL_AGENCY.mdf;Integrated Security=True" SettingsObjectName="ElaboratoBDD.Properties.Settings" SettingsPropertyName="MODEL_AGENCYConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Customer" Member="Customer">
+    <Type Name="Customer">
+      <Column Name="iden_card_numb" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="surname" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="birth_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="P_IVA" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="final_client" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Customer_Offer" Member="Offer" ThisKey="iden_card_numb" OtherKey="customer_iden_card_numb" Type="Offer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Document" Member="Document">
+    <Type Name="Document">
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="size" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="path" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="type" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="model_iden_card_numb" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Model_Document" Member="Model" ThisKey="model_iden_card_numb" OtherKey="iden_card_numb" Type="Model" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Event" Member="Event">
+    <Type Name="Event">
+      <Column Name="codOffer" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="offer_date" Type="System.DateTime" DbType="Date NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="codEvent" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="start_time" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="end_time" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="model_iden_card_numb" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="transport_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Model_Event" Member="Model" ThisKey="model_iden_card_numb" OtherKey="iden_card_numb" Type="Model" IsForeignKey="true" />
+      <Association Name="Offer_Event" Member="Offer" ThisKey="codOffer,offer_date" OtherKey="codOffer,date_" Type="Offer" IsForeignKey="true" />
+      <Association Name="Transport_Event" Member="Transport" ThisKey="transport_ID" OtherKey="ID" Type="Transport" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Location" Member="Location">
+    <Type Name="Location">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CAP" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Avenue" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Number" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Country" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Location_Offer" Member="Offer" ThisKey="ID" OtherKey="location_ID" Type="Offer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Manager" Member="Manager">
+    <Type Name="Manager">
+      <Column Name="iden_card_numb" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="surname" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="birth_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Manager_Model" Member="Model" ThisKey="iden_card_numb" OtherKey="manager_iden_card_numb" Type="Model" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Model" Member="Model">
+    <Type Name="Model">
+      <Column Name="iden_card_numb" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="surname" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="birth_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="eyes_color" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="age" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="hair_color" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="shoes_number" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="height" Type="System.Decimal" DbType="Decimal(3,2)" CanBeNull="true" />
+      <Column Name="waist" Type="System.Decimal" DbType="Decimal(3,1)" CanBeNull="true" />
+      <Column Name="success_rate" Type="System.Decimal" DbType="Decimal(3,2)" CanBeNull="true" />
+      <Column Name="manager_iden_card_numb" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Model_Document" Member="Document" ThisKey="iden_card_numb" OtherKey="model_iden_card_numb" Type="Document" />
+      <Association Name="Model_Event" Member="Event" ThisKey="iden_card_numb" OtherKey="model_iden_card_numb" Type="Event" />
+      <Association Name="Model_Photo" Member="Photo" ThisKey="iden_card_numb" OtherKey="model_iden_card_numb" Type="Photo" />
+      <Association Name="Model_proposal" Member="proposal" ThisKey="iden_card_numb" OtherKey="model_iden_card_numb" Type="proposal" />
+      <Association Name="Model_Social" Member="Social" ThisKey="iden_card_numb" OtherKey="model_iden_card_numb" Type="Social" />
+      <Association Name="Model_Video" Member="Video" ThisKey="iden_card_numb" OtherKey="model_iden_card_numb" Type="Video" />
+      <Association Name="Manager_Model" Member="Manager" ThisKey="manager_iden_card_numb" OtherKey="iden_card_numb" Type="Manager" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Offer" Member="Offer">
+    <Type Name="Offer">
+      <Column Name="approval_date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="codOffer" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="date_" Type="System.DateTime" DbType="Date NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="status" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="requested_models" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="short_description" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="long_description" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="budget" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="offer_type_name" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="location_ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="customer_iden_card_numb" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Offer_Event" Member="Event" ThisKey="codOffer,date_" OtherKey="codOffer,offer_date" Type="Event" />
+      <Association Name="Offer_proposal" Member="proposal" ThisKey="codOffer,date_" OtherKey="codOffer,offer_date" Type="proposal" />
+      <Association Name="Customer_Offer" Member="Customer" ThisKey="customer_iden_card_numb" OtherKey="iden_card_numb" Type="Customer" IsForeignKey="true" />
+      <Association Name="Location_Offer" Member="Location" ThisKey="location_ID" OtherKey="ID" Type="Location" IsForeignKey="true" />
+      <Association Name="OfferType_Offer" Member="OfferType" ThisKey="offer_type_name" OtherKey="name" Type="OfferType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OfferType" Member="OfferType">
+    <Type Name="OfferType">
+      <Column Name="name" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="OfferType_Offer" Member="Offer" ThisKey="name" OtherKey="offer_type_name" Type="Offer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Photo" Member="Photo">
+    <Type Name="Photo">
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="size" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="path" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="model_iden_card_numb" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Model_Photo" Member="Model" ThisKey="model_iden_card_numb" OtherKey="iden_card_numb" Type="Model" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.proposal" Member="proposal">
+    <Type Name="proposal">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="model_iden_card_numb" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="codOffer" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="offer_date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.Char" DbType="Char(1) NOT NULL" CanBeNull="false" />
+      <Association Name="Model_proposal" Member="Model" ThisKey="model_iden_card_numb" OtherKey="iden_card_numb" Type="Model" IsForeignKey="true" />
+      <Association Name="Offer_proposal" Member="Offer" ThisKey="codOffer,offer_date" OtherKey="codOffer,date_" Type="Offer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Social" Member="Social">
+    <Type Name="Social">
+      <Column Name="model_iden_card_numb" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="platform" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="link" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="username" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="followers" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Model_Social" Member="Model" ThisKey="model_iden_card_numb" OtherKey="iden_card_numb" Type="Model" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Transport" Member="Transport">
+    <Type Name="Transport">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="type" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="start_datetime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="arrival_datetime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="departure_place" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="destination_place" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="Transport_Event" Member="Event" ThisKey="ID" OtherKey="transport_ID" Type="Event" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Video" Member="Video">
+    <Type Name="Video">
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="size" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="path" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="model_iden_card_numb" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Model_Video" Member="Model" ThisKey="model_iden_card_numb" OtherKey="iden_card_numb" Type="Model" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
