@@ -12,6 +12,7 @@
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Mindbox.Data.Linq" Version="2.0.7" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
+    <PackageReference Include="XtraEditor.Controls" Version="18.2.4" />
   </ItemGroup>
 
   <ItemGroup>

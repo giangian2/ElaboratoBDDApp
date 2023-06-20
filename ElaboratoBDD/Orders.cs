@@ -25,6 +25,14 @@ namespace ElaboratoBDD
 
         private void refresh_data_sources()
         {
+
+            cmbProposedModels.DataSource = from m in ctx.Model
+                                           select m;
+
+            cmbProposedModels.DisplayMember = "Row";
+            cmbProposedModels.ValueMember = "iden_card_numb";
+
+
             dataGridView1.DataSource = from o in ctx.Offer
                                        join c in ctx.Customer on o.Customer.iden_card_numb equals c.iden_card_numb
                                        join l in ctx.Location on o.Location.ID equals l.ID
@@ -92,8 +100,9 @@ namespace ElaboratoBDD
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
+            lbProposedModels.Items.Clear();
             DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
-            MessageBox.Show(e.RowIndex.ToString());
+
             dtpOfferApprovalDate.Value = Convert.ToDateTime(row.Cells[0].Value.ToString());
             dtpOfferDate.Value = Convert.ToDateTime(row.Cells[2].Value.ToString());
 
@@ -106,6 +115,47 @@ namespace ElaboratoBDD
             cmbCustomers.SelectedValue = row.Cells[8].Value.ToString();
             cmbOfferType.SelectedValue = row.Cells[12].Value.ToString();
             cmbLocation.SelectedText = row.Cells[11].Value.ToString();
+
+
+            var proposed_models= from p in ctx.proposal
+                                 join o in ctx.Offer on p.codOffer equals o.codOffer
+                                 join m in ctx.Model on p.model_iden_card_numb equals m.iden_card_numb
+                                 where o.codOffer == Convert.ToInt32(row.Cells[1].Value)
+                                 select m;
+
+            foreach(var m in proposed_models)
+            {
+                lbProposedModels.Items.Add(m.Row);
+            }
+        }
+
+        private void lbProposedModels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = this.dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex];
+            var proposal = new proposal();
+            proposal.status = 'p';
+            proposal.model_iden_card_numb = cmbProposedModels.SelectedValue.ToString();
+            var offer = (from o in ctx.Offer
+                        where o.codOffer == Convert.ToInt32(row.Cells[1].Value)
+                        select o).FirstOrDefault();
+
+            proposal.Offer = offer;
+            ctx.proposal.InsertOnSubmit(proposal);
+            ctx.SubmitChanges();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = this.dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex];
+
+            ctx.ExecuteCommand(@"UPDATE dbo.proposal SET status='a' WHERE dbo.proposal.codOffer={0}", Convert.ToInt32(row.Cells[1].Value));
+
+            ctx.SubmitChanges();
         }
     }
 }

@@ -659,7 +659,9 @@ namespace ElaboratoBDD
 		private string _model_iden_card_numb;
 		
 		private int _transport_ID;
-		
+
+		public string Row => $"{_codOffer} {_offer_date} {_codEvent} {_start_time} {_end_time} {_transport_ID}";
+
 		private EntityRef<Model> _Model;
 		
 		private EntityRef<Offer> _Offer;
@@ -1406,6 +1408,8 @@ namespace ElaboratoBDD
 		private System.Nullable<decimal> _success_rate;
 		
 		private string _manager_iden_card_numb;
+
+		public string Row => $"{_name} {_surname}";
 		
 		private EntitySet<Document> _Document;
 		
