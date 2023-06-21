@@ -21,10 +21,6 @@ namespace ElaboratoBDD
             this.updateStats();
 
             pictureBox1.SizeMode= PictureBoxSizeMode.StretchImage;
-
-            DataGridViewRow row = this.dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex];
-
-            cmbRelatedOffer.DataSource = ctx.ExecuteQuery<Offer>(@"SELECT Offer.* FROM Offer JOIn proposal ON dbo.Offer.codOffer=dbo.proposal.codOffer WHERE proposal.status = 'a' AND Offer.status = 'closed' AND proposal.model_iden_card_numb='{0}';", row.Cells[0].Value.ToString()).ToList();
         }
 
         private void updateStats()
@@ -193,6 +189,16 @@ namespace ElaboratoBDD
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
+
+            txtTransportDesc.Text = "";
+            txtTransportDepPlace.Text = "";
+            txtTransportDestPlace.Text = "";
+            txtTransportType.Text = "";
+            dtpEndDate.Value = DateTime.Now;
+            dtpStartDate.Value = DateTime.Now;
+            dtpTransportArrivalDT.Value = DateTime.Now;
+            dtpTransportStartDT.Value = DateTime.Now;
+
             var date = Convert.ToDateTime(monthCalendar1.SelectionRange.End.ToString());
 
             DataGridViewRow row = this.dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex];
@@ -244,17 +250,19 @@ namespace ElaboratoBDD
 
             _event.model_iden_card_numb = row.Cells[0].Value.ToString();
             _event.codOffer = Convert.ToInt32(cmbRelatedOffer.SelectedValue);
-            _event.start_time = dtpStartDate.Value;
+            
             _event.end_time = dtpEndDate.Value;
             _event.offer_date = (from o in ctx.Offer
                                 where o.codOffer == Convert.ToInt32(cmbRelatedOffer.SelectedValue)
                                 select o.date_).FirstOrDefault();
+            _event.start_time = _event.offer_date;
 
             var transport = new Transport();
             transport.start_datetime = dtpTransportStartDT.Value;
             transport.arrival_datetime = dtpTransportArrivalDT.Value;
             transport.description = txtTransportDesc.Text;
             transport.departure_place = txtTransportDepPlace.Text;
+            transport.type = txtTransportType.Text;
             transport.destination_place = txtTransportDestPlace.Text;
 
             ctx.Transport.InsertOnSubmit(transport);
@@ -264,6 +272,24 @@ namespace ElaboratoBDD
 
             ctx.Event.InsertOnSubmit(_event);
             ctx.SubmitChanges();
+        }
+
+        private void modelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var modelsForm = new Models();
+            modelsForm.ShowDialog();
+        }
+
+        private void cmbRelatedOffer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                DateTime offer_date = (from o in ctx.Offer
+                                       where o.codOffer == Convert.ToInt32(cmbRelatedOffer.SelectedValue)
+                                       select o.date_).FirstOrDefault();
+                dtpStartDate.Value = offer_date;
+            }catch(Exception ex) { Console.WriteLine(ex.ToString()); }
+           
         }
     }
 }

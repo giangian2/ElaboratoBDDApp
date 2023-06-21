@@ -76,6 +76,8 @@
             this.cmbRelatedOffer = new System.Windows.Forms.ComboBox();
             this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label16 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.offerBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.customerBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -124,6 +126,7 @@
             this.modelsToolStripMenuItem.Name = "modelsToolStripMenuItem";
             this.modelsToolStripMenuItem.Size = new System.Drawing.Size(86, 29);
             this.modelsToolStripMenuItem.Text = "Models";
+            this.modelsToolStripMenuItem.Click += new System.EventHandler(this.modelsToolStripMenuItem_Click);
             // 
             // locationsToolStripMenuItem
             // 
@@ -177,6 +180,7 @@
             // 
             this.txtEarning.Location = new System.Drawing.Point(308, 220);
             this.txtEarning.Name = "txtEarning";
+            this.txtEarning.ReadOnly = true;
             this.txtEarning.Size = new System.Drawing.Size(171, 23);
             this.txtEarning.TabIndex = 9;
             // 
@@ -184,6 +188,7 @@
             // 
             this.txtClosedOffers.Location = new System.Drawing.Point(308, 172);
             this.txtClosedOffers.Name = "txtClosedOffers";
+            this.txtClosedOffers.ReadOnly = true;
             this.txtClosedOffers.Size = new System.Drawing.Size(171, 23);
             this.txtClosedOffers.TabIndex = 8;
             // 
@@ -191,6 +196,7 @@
             // 
             this.txtCustomerWithHighestBudget.Location = new System.Drawing.Point(308, 128);
             this.txtCustomerWithHighestBudget.Name = "txtCustomerWithHighestBudget";
+            this.txtCustomerWithHighestBudget.ReadOnly = true;
             this.txtCustomerWithHighestBudget.Size = new System.Drawing.Size(171, 23);
             this.txtCustomerWithHighestBudget.TabIndex = 7;
             // 
@@ -198,6 +204,7 @@
             // 
             this.textCustomerWithMostCLosedOffers.Location = new System.Drawing.Point(308, 79);
             this.textCustomerWithMostCLosedOffers.Name = "textCustomerWithMostCLosedOffers";
+            this.textCustomerWithMostCLosedOffers.ReadOnly = true;
             this.textCustomerWithMostCLosedOffers.Size = new System.Drawing.Size(171, 23);
             this.textCustomerWithMostCLosedOffers.TabIndex = 6;
             // 
@@ -205,6 +212,7 @@
             // 
             this.txtTopModel.Location = new System.Drawing.Point(308, 35);
             this.txtTopModel.Name = "txtTopModel";
+            this.txtTopModel.ReadOnly = true;
             this.txtTopModel.Size = new System.Drawing.Size(171, 23);
             this.txtTopModel.TabIndex = 5;
             // 
@@ -260,6 +268,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.monthCalendar1);
             this.groupBox2.Controls.Add(this.btnNextImage);
             this.groupBox2.Controls.Add(this.pictureBox1);
@@ -272,7 +281,7 @@
             // 
             // monthCalendar1
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(12, 35);
+            this.monthCalendar1.Location = new System.Drawing.Point(12, 80);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 2;
             this.monthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged);
@@ -485,6 +494,7 @@
             this.cmbRelatedOffer.Name = "cmbRelatedOffer";
             this.cmbRelatedOffer.Size = new System.Drawing.Size(121, 23);
             this.cmbRelatedOffer.TabIndex = 2;
+            this.cmbRelatedOffer.SelectedIndexChanged += new System.EventHandler(this.cmbRelatedOffer_SelectedIndexChanged);
             // 
             // dtpEndDate
             // 
@@ -499,6 +509,16 @@
             this.dtpStartDate.Name = "dtpStartDate";
             this.dtpStartDate.Size = new System.Drawing.Size(200, 23);
             this.dtpStartDate.TabIndex = 0;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label16.Location = new System.Drawing.Point(12, 39);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(131, 21);
+            this.label16.TabIndex = 3;
+            this.label16.Text = "Calendario Eventi";
             // 
             // Form1
             // 
@@ -523,6 +543,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -579,5 +600,7 @@
         private TextBox txtTransportDesc;
         private Label label11;
         private Label label10;
+        private System.Windows.Forms.Timer timer1;
+        private Label label16;
     }
 }

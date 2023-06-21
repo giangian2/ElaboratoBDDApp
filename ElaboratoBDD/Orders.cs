@@ -7,15 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ElaboratoBDD.Utils;
 
 namespace ElaboratoBDD
 {
     public partial class Orders : Form
     {
         ModelAgencyDataContext ctx = new ModelAgencyDataContext();
+        SuccessRateCalculator src;
+
         public Orders()
         {
             InitializeComponent();
+            this.src = new SuccessRateCalculator(ctx);
         }
 
         private void Orders_Load(object sender, EventArgs e)
@@ -100,7 +104,7 @@ namespace ElaboratoBDD
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            lbProposedModels.Items.Clear();
+            this.refresh_listbox_items();
             DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
 
             dtpOfferApprovalDate.Value = Convert.ToDateTime(row.Cells[0].Value.ToString());
@@ -117,13 +121,20 @@ namespace ElaboratoBDD
             cmbLocation.SelectedText = row.Cells[11].Value.ToString();
 
 
-            var proposed_models= from p in ctx.proposal
-                                 join o in ctx.Offer on p.codOffer equals o.codOffer
-                                 join m in ctx.Model on p.model_iden_card_numb equals m.iden_card_numb
-                                 where o.codOffer == Convert.ToInt32(row.Cells[1].Value)
-                                 select m;
+            
+        }
 
-            foreach(var m in proposed_models)
+        private void refresh_listbox_items()
+        {
+            DataGridViewRow row = this.dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex];
+            lbProposedModels.Items.Clear();
+            var proposed_models = from p in ctx.proposal
+                                  join o in ctx.Offer on p.codOffer equals o.codOffer
+                                  join m in ctx.Model on p.model_iden_card_numb equals m.iden_card_numb
+                                  where o.codOffer == Convert.ToInt32(row.Cells[1].Value)
+                                  select m;
+
+            foreach (var m in proposed_models)
             {
                 lbProposedModels.Items.Add(m.Row);
             }
@@ -139,7 +150,7 @@ namespace ElaboratoBDD
             DataGridViewRow row = this.dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex];
             var proposal = new proposal();
             proposal.status = 'p';
-            proposal.model_iden_card_numb = cmbProposedModels.SelectedValue.ToString();
+            proposal.model_iden_card_numb = cmbProposedModels.SelectedValue.ToString(); 
             var offer = (from o in ctx.Offer
                         where o.codOffer == Convert.ToInt32(row.Cells[1].Value)
                         select o).FirstOrDefault();
@@ -147,6 +158,9 @@ namespace ElaboratoBDD
             proposal.Offer = offer;
             ctx.proposal.InsertOnSubmit(proposal);
             ctx.SubmitChanges();
+
+            this.refresh_listbox_items();
+            src.UpdateSuccessRateFromProposal(proposal);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -156,6 +170,9 @@ namespace ElaboratoBDD
             ctx.ExecuteCommand(@"UPDATE dbo.proposal SET status='a' WHERE dbo.proposal.codOffer={0}", Convert.ToInt32(row.Cells[1].Value));
 
             ctx.SubmitChanges();
+
+            var offer = (from o in ctx.Offer where o.codOffer == Convert.ToInt32(row.Cells[1].Value) select o).FirstOrDefault();
+            src.UpdateSuccessRateFromOffer(offer);
         }
     }
 }
