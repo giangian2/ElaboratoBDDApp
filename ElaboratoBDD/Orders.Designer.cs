@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -62,6 +66,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.btnUpdate);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
@@ -87,6 +95,43 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Offerte";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(547, 261);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(50, 15);
+            this.label10.TabIndex = 23;
+            this.label10.Text = "location";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(547, 202);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(58, 15);
+            this.label9.TabIndex = 22;
+            this.label9.Text = "offer type";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(547, 146);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(57, 15);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "customer";
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(547, 325);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(101, 23);
+            this.btnUpdate.TabIndex = 20;
+            this.btnUpdate.Text = "UPDATE";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // label7
             // 
@@ -267,6 +312,7 @@
             this.button4.TabIndex = 5;
             this.button4.Text = "Chiudi offerta";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
@@ -362,5 +408,9 @@
         private Button button2;
         private Button button1;
         private ComboBox cmbProposedModels;
+        private Button btnUpdate;
+        private Label label10;
+        private Label label9;
+        private Label label8;
     }
 }

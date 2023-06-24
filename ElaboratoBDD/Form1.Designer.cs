@@ -50,6 +50,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.btnNextImage = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -77,7 +78,6 @@
             this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label16 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.offerBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.customerBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -142,6 +142,7 @@
             this.customersToolStripMenuItem.Name = "customersToolStripMenuItem";
             this.customersToolStripMenuItem.Size = new System.Drawing.Size(113, 29);
             this.customersToolStripMenuItem.Text = "Customers";
+            this.customersToolStripMenuItem.Click += new System.EventHandler(this.customersToolStripMenuItem_Click);
             // 
             // dataGridView1
             // 
@@ -278,6 +279,16 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Model Details";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label16.Location = new System.Drawing.Point(12, 39);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(131, 21);
+            this.label16.TabIndex = 3;
+            this.label16.Text = "Calendario Eventi";
             // 
             // monthCalendar1
             // 
@@ -509,16 +520,6 @@
             this.dtpStartDate.Name = "dtpStartDate";
             this.dtpStartDate.Size = new System.Drawing.Size(200, 23);
             this.dtpStartDate.TabIndex = 0;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label16.Location = new System.Drawing.Point(12, 39);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(131, 21);
-            this.label16.TabIndex = 3;
-            this.label16.Text = "Calendario Eventi";
             // 
             // Form1
             // 

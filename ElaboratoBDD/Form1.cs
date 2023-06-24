@@ -291,5 +291,11 @@ namespace ElaboratoBDD
             }catch(Exception ex) { Console.WriteLine(ex.ToString()); }
            
         }
+
+        private void customersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var customersForm= new Customers();
+            customersForm.ShowDialog();
+        }
     }
 }

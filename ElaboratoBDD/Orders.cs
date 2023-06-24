@@ -86,7 +86,8 @@ namespace ElaboratoBDD
             var offer = new Offer();
 
             offer.budget = Convert.ToInt32(txtOfferBudget.Text);
-            offer.approval_date = dtpOfferApprovalDate.Value;
+            if(dtpOfferApprovalDate.Value.Date != DateTime.Today.Date)
+                offer.approval_date = dtpOfferApprovalDate.Value;
             offer.date_ = dtpOfferDate.Value;
             offer.status = txtOfferStatus.Text;
             offer.requested_models = Convert.ToInt32(txtRequestedModels.Text);
@@ -107,7 +108,8 @@ namespace ElaboratoBDD
             this.refresh_listbox_items();
             DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
 
-            dtpOfferApprovalDate.Value = Convert.ToDateTime(row.Cells[0].Value.ToString());
+            if(row.Cells[0].Value!=null)
+                dtpOfferApprovalDate.Value = Convert.ToDateTime(row.Cells[0].Value.ToString());
             dtpOfferDate.Value = Convert.ToDateTime(row.Cells[2].Value.ToString());
 
             txtOfferStatus.Text = row.Cells[3].Value.ToString();
@@ -173,6 +175,39 @@ namespace ElaboratoBDD
 
             var offer = (from o in ctx.Offer where o.codOffer == Convert.ToInt32(row.Cells[1].Value) select o).FirstOrDefault();
             src.UpdateSuccessRateFromOffer(offer);
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = this.dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex];
+
+            var offer = (from o in ctx.Offer
+                         where o.codOffer == Convert.ToInt32(row.Cells[1].Value)
+                         select o).FirstOrDefault();
+
+
+            if (dtpOfferApprovalDate.Value.Date != DateTime.Today.Date)
+                offer.approval_date = dtpOfferApprovalDate.Value;
+            offer.status = txtOfferStatus.Text;
+            offer.requested_models = Convert.ToInt32(txtRequestedModels.Text);
+            offer.short_description = txtOfferShortDesc.Text;
+            offer.long_description = txtOfferLongDesc.Text;
+
+            ctx.SubmitChanges();
+
+            this.refresh_data_sources();
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = this.dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex];
+
+            ctx.ExecuteCommand(@"UPDATE dbo.Offer SET status='closed' WHERE dbo.Offer.codOffer={0}", Convert.ToInt32(row.Cells[1].Value));
+
+            ctx.SubmitChanges();
+
+            this.refresh_data_sources();
         }
     }
 }

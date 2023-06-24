@@ -92,6 +92,7 @@ namespace ElaboratoBDD
 
         private void Models_Load(object sender, EventArgs e)
         {
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             cmbManager.DataSource = (from m in ctx.Manager
                                      select m).ToList();
             cmbManager.DisplayMember = "name";
